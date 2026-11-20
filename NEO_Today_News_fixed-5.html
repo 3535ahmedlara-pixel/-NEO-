@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>NEO — Connect Your World</title>
+<style>
+:root{--bg:#f4f4f4;--panel:#fff;--text:#111;--muted:#777;--line:#e8e8e8;--soft:#f1f1f1;--accent:#111;--shadow:0 2px 14px rgba(0,0,0,.045)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Tahoma,sans-serif;transition:.2s}body.dark{--bg:#050505;--panel:#101010;--text:#f7f7f7;--muted:#aaa;--line:#292929;--soft:#1b1b1b;--accent:#fff;--shadow:0 2px 16px rgba(0,0,0,.25)}
+button,input,textarea{font:inherit}button{cursor:pointer}img,video{max-width:100%;filter:none!important}
+.topbar{height:66px;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100% - 1240px)/2));position:sticky;top:0;z-index:20}
+.brand{display:flex;align-items:center;gap:9px;font-weight:900;font-size:27px;letter-spacing:1px}.brand-mark{width:37px;height:37px;border-radius:12px;background:#171717;color:white;display:grid;place-items:center;font-size:23px}.dark .brand-mark{background:white;color:black}
+.search{width:min(340px,34vw);background:var(--soft);border:1px solid var(--line);border-radius:24px;padding:11px 16px;color:var(--text);outline:none}
+.top-actions{display:flex;gap:9px}.icon-btn{width:40px;height:40px;border:0;border-radius:50%;background:var(--soft);color:var(--text);font-size:18px;display:grid;place-items:center}
+.layout{max-width:1240px;margin:22px auto;display:grid;grid-template-columns:250px minmax(0,640px) 270px;gap:20px;padding:0 14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.left{position:sticky;top:84px;height:max-content;padding:15px}.profile-mini{display:flex;align-items:center;gap:11px;padding:7px 5px 16px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.avatar{width:43px;height:43px;border-radius:50%;object-fit:cover;background:var(--soft)}.name{font-weight:700}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+.navitem{display:flex;align-items:center;gap:13px;padding:12px 10px;border-radius:11px;color:var(--text);font-weight:600;cursor:pointer}.navitem:hover,.navitem.active{background:var(--soft)}.navicon{width:25px;text-align:center;font-size:19px}
+.center{min-width:0}.stories{padding:15px;display:flex;gap:13px;overflow:auto;margin-bottom:14px}.story{min-width:67px;text-align:center;font-size:12px;color:var(--muted)}.story-ring{width:58px;height:58px;border-radius:50%;padding:3px;border:2px solid var(--text);margin:0 auto 6px}.story-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover}.story.add .story-ring{display:grid;place-items:center;background:var(--soft);font-size:26px;color:var(--text)}
+.composer{padding:15px;margin-bottom:14px}.composer-top{display:flex;gap:10px;align-items:center}.composer input{flex:1;min-width:0;border:0;outline:0;background:var(--soft);padding:13px 16px;border-radius:25px;color:var(--text)}.composer-actions{display:flex;justify-content:space-around;border-top:1px solid var(--line);margin-top:14px;padding-top:12px}.composer-actions button{background:none;border:0;color:var(--muted);font-weight:600;padding:6px}
+.post{margin-bottom:14px;overflow:hidden}.post-head{display:flex;align-items:center;gap:10px;padding:15px 16px}.post-head .grow{flex:1}.post-menu{border:0;background:none;color:var(--muted);font-size:20px}.verified{font-size:12px;color:#287be8}.post-text{padding:0 16px 13px;line-height:1.8}.post-image{width:100%;max-height:440px;object-fit:cover;display:block}.post-stats{padding:11px 16px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;border-bottom:1px solid var(--line)}.post-actions{display:flex;padding:5px 9px}.post-actions button{flex:1;border:0;background:none;color:var(--muted);padding:11px 3px;border-radius:8px;font-weight:600}.post-actions button:hover{background:var(--soft)}.post-actions button.liked{color:#2778e8}
+.right{position:sticky;top:84px;height:max-content;padding:16px}.section-title{font-size:15px;font-weight:800;margin:0 0 13px}.news-card{margin-bottom:15px}.news-card img{width:100%;height:115px;object-fit:cover;border-radius:11px}.news-card h4{font-size:14px;line-height:1.6;margin:8px 0 4px}.news-card small{color:var(--muted)}.official{display:inline-flex;align-items:center;gap:5px;background:var(--soft);padding:5px 8px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:7px}
+.modal-back{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:15px;z-index:50}.modal{width:min(500px,100%);background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px}.modal textarea{width:100%;height:130px;resize:vertical;border:1px solid var(--line);background:var(--soft);color:var(--text);border-radius:12px;padding:12px;outline:none}.modal input{width:100%;margin:10px 0;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--text)}.primary{background:var(--accent);color:var(--bg);border:0;border-radius:10px;padding:11px 18px;font-weight:700}.modal-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.close{border:0;background:none;color:var(--text);font-size:22px}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+@media(max-width:1050px){.layout{grid-template-columns:210px minmax(0,1fr)}.right{display:none}}
+@media(max-width:700px){.topbar{height:58px;padding:0 12px}.brand{font-size:23px}.brand-mark{width:33px;height:33px}.search{display:none}.layout{display:block;margin:12px auto;padding:0 9px}.left{display:none}.stories{border-radius:13px}.post{border-radius:13px}.right{display:none}.composer{border-radius:13px}}
+
+.profile-toolbar{display:flex;align-items:center;margin:0 0 12px}.back-home{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--panel);color:var(--text);padding:10px 15px;border-radius:11px;font-weight:700}.back-home:hover{background:var(--soft)}.profile-view{display:none}.profile-cover{height:155px;border-radius:15px 15px 0 0;background:linear-gradient(135deg,#171717,#555);position:relative}.profile-main{padding:0 20px 18px}.profile-head{display:flex;align-items:end;gap:14px;margin-top:-43px;position:relative}.profile-large-avatar{width:112px;height:112px;border-radius:50%;border:5px solid var(--panel);object-fit:cover;background:var(--soft)}.profile-title{font-size:22px;font-weight:800;margin:0 0 5px}.profile-bio{color:var(--muted);font-size:14px;margin-top:10px}.profile-stats{display:flex;gap:22px;border-top:1px solid var(--line);margin-top:17px;padding-top:14px;color:var(--muted);font-size:13px}.profile-tabs{display:flex;gap:8px;border-top:1px solid var(--line);margin-top:15px;padding-top:12px}.profile-tabs button{border:0;background:var(--soft);color:var(--text);padding:10px 15px;border-radius:9px}.profile-tabs button.active{background:var(--accent);color:var(--bg)}.profile-posts{margin-top:14px}.profile-empty{padding:30px;text-align:center;color:var(--muted)}.profile-action{margin-inline-start:auto;margin-bottom:5px}
+
+
+/* NEO admin workspace: isolated from the public-site design */
+.admin-modal{width:min(960px,100%);max-height:92vh;overflow:auto;padding:20px}.admin-head,.admin-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.admin-title{font-size:22px}.admin-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.admin-stat{background:var(--soft);border:1px solid var(--line);border-radius:13px;padding:13px}.admin-stat small{display:block;color:var(--muted);font-size:12px}.admin-stat b{display:block;font-size:23px;margin-top:5px}.admin-tabs{display:flex;gap:7px;overflow:auto;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:15px}.admin-tabs button,.admin-shortcuts button,.admin-refresh{border:1px solid var(--line);background:var(--soft);color:var(--text);padding:9px 13px;border-radius:9px;white-space:nowrap}.admin-tabs button.active{background:var(--accent);color:var(--bg)}.admin-page h3{font-size:16px;margin:8px 0 12px}.admin-shortcuts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.admin-list{display:grid;gap:9px;margin-top:12px}.admin-row{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.admin-row-main{min-width:0;flex:1}.admin-row-title{font-weight:700;overflow-wrap:anywhere}.admin-row-meta{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.7}.admin-row-actions{display:flex;gap:6px;flex-wrap:wrap}.admin-action{border:1px solid var(--line);background:var(--soft);color:var(--text);border-radius:8px;padding:7px 9px;font-size:12px}.admin-action.danger{color:#c33}.admin-action.good{color:#16834a}.admin-search{width:100%;margin:10px 0;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--text)}.admin-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);margin-top:18px;padding-top:13px}.admin-page[hidden]{display:none!important}@media(max-width:600px){.admin-modal{padding:13px}.admin-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-row{display:block}.admin-row-actions{margin-top:10px}.admin-foot{align-items:flex-start;flex-direction:column}}
+
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">N</span><span>NEO</span></div>
+  <input class="search" placeholder="ابحث في NEO..." aria-label="بحث">
+  <div class="top-actions">
+    
+    <button class="icon-btn" title="الوضع الليلي" onclick="toggleTheme()">◐</button>
+    <button class="icon-btn" title="الإشعارات" onclick="notify('لا توجد إشعارات جديدة')">♧</button>
+    <button class="icon-btn" title="الرسائل" onclick="notify('الرسائل ستتوفر بعد ربط قاعدة البيانات')">✉</button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="left panel">
+    <div class="profile-mini">
+      <img class="avatar" onclick="showProfile()" style="cursor:pointer" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" alt="الصورة الشخصية">
+      <div onclick="showProfile()" style="cursor:pointer"><div class="name">AM8 <span id="neoMiniVerified" class="verified" style="display:none">● ✓</span></div><div class="sub">@ahmed_aboshahla</div></div>
+    </div>
+    <div class="navitem active" onclick="setTab(this,'الرئيسية')"><span class="navicon">⌂</span> الرئيسية</div>
+    <div class="navitem" onclick="setTab(this,'الأخبار')"><span class="navicon">▤</span> الأخبار</div>
+    <div class="navitem" onclick="setTab(this,'الفيديوهات')"><span class="navicon">▷</span> الفيديوهات</div>
+    <div class="navitem" onclick="setTab(this,'الأصدقاء')"><span class="navicon">♙</span> الأصدقاء</div>
+    <div class="navitem" onclick="setTab(this,'المحفوظات')"><span class="navicon">▣</span> المحفوظات</div>
+    <div class="navitem" onclick="showProfile()"><span class="navicon">◎</span> ملفي الشخصي</div>
+  </aside>
+
+  <main class="center">
+    <section class="profile-view" id="profileView">
+      <div class="profile-toolbar">
+        <button class="back-home" onclick="showHome()" aria-label="الرجوع للرئيسية">➜ <span>الرئيسية</span></button>
+      </div>
+      <div class="panel" style="overflow:hidden">
+        <div class="profile-cover"></div>
+        <div class="profile-main">
+          <div class="profile-head">
+            <img id="profileAvatar" class="profile-large-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&h=300&fit=crop" alt="صورتك الشخصية">
+            <div style="padding-bottom:8px"><h2 class="profile-title" id="profileName">AM8</h2><span id="neoProfileVerified" class="verified" style="display:none;margin-bottom:8px">● ✓ حساب موثق</span><div class="sub" id="profileUsername">@ahmed_aboshahla</div></div>
+            <button class="primary profile-action" onclick="editProfile()">تعديل الملف الشخصي</button>
+          </div>
+          <div class="profile-bio" id="profileBio">مرحباً بك في حسابي على NEO</div>
+          <div class="profile-stats"><span><b id="profilePostCount">0</b> منشور</span><span><b>0</b> الأصدقاء</span><span><b>0</b> يتابعهم</span></div>
+          <div class="profile-tabs"><button class="active" onclick="profileTab(this,'posts')">منشوراتي</button><button onclick="profileTab(this,'about')">حول</button><button onclick="profileTab(this,'photos')">الصور</button></div>
+        </div>
+      </div>
+      <div class="profile-posts" id="profilePosts"></div>
+    </section>
+    <section class="stories panel">
+      <div class="story add" onclick="notify('إضافة القصص ستتوفر بعد ربط التخزين')"><div class="story-ring">+</div>قصتك</div>
+      <div class="story"><div class="story-ring"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" alt=""></div>Omar</div>
+      <div class="story"><div class="story-ring"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt=""></div>Salma</div>
+      <div class="story"><div class="story-ring"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop" alt=""></div>Youssef</div>
+      <div class="story"><div class="story-ring"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&h=100&fit=crop" alt=""></div>Malak</div>
+      <div class="story"><div class="story-ring"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt=""></div>Adam</div>
+    </section>
+
+    <section class="composer panel">
+      <div class="composer-top">
+        <img class="avatar" onclick="showProfile()" style="cursor:pointer" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop" alt="">
+        <input id="quickPost" placeholder="بم تفكر يا AM8؟" onclick="openComposer()" readonly>
+      </div>
+      <div class="composer-actions">
+        <button onclick="openComposer()">▧ صورة / فيديو</button>
+        <button onclick="openComposer()">✎ كتابة منشور</button>
+        <button onclick="notify('نشر الأخبار الرسمي من لوحة الإدارة')">▤ خبر</button>
+      </div>
+    </section>
+
+    <section id="neoNewsFeed" aria-label="أخبار اليوم" style="margin-top:14px"></section>
+
+    <div id="feed">
+      <article class="post panel">
+        <div class="post-head">
+          <img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" onerror="this.src='https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop'" alt="">
+          <div class="grow"><div class="name">NEO News <span class="verified">● ✓</span></div><div class="sub">منذ 25 دقيقة · خبر رسمي</div></div>
+          <button class="post-menu" aria-label="خيارات">⋯</button>
+        </div>
+        <div class="post-text"><span class="official">▤ خبر من NEO</span><br><b>أهلاً بك في NEO</b><br>مساحتك الجديدة للتواصل ومتابعة الأخبار ومشاركة اللحظات مع الآخرين. تابع آخر المنشورات من مكان واحد.</div>
+        <img class="post-image" src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&auto=format&fit=crop" alt="صحف وأخبار">
+        <div class="post-stats"><span>👍 <span class="likes-count">128</span> إعجاب</span><span>12 تعليق · 4 مشاركات</span></div>
+        <div class="post-actions"><button onclick="likePost(this)">♡ إعجاب</button><button onclick="notify('التعليقات ستعمل بعد ربط قاعدة البيانات')">▢ تعليق</button><button onclick="sharePost()">↗ مشاركة</button></div>
+      </article>
+
+      <article class="post panel">
+        <div class="post-head">
+          <img class="avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" alt="">
+          <div class="grow"><div class="name">Omar Hassan</div><div class="sub">منذ ساعة</div></div><button class="post-menu">⋯</button>
+        </div>
+        <div class="post-text">يوم جميل وبداية جديدة ✨</div>
+        <img class="post-image" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&auto=format&fit=crop" alt="منظر طبيعي">
+        <div class="post-stats"><span>👍 <span class="likes-count">36</span> إعجاب</span><span>8 تعليقات</span></div>
+        <div class="post-actions"><button onclick="likePost(this)">♡ إعجاب</button><button onclick="notify('التعليقات ستعمل بعد ربط قاعدة البيانات')">▢ تعليق</button><button onclick="sharePost()">↗ مشاركة</button></div>
+      </article>
+    </div>
+  </main>
+
+  <aside class="right panel">
+    <h3 class="section-title">أهم الأخبار</h3>
+    <div class="news-card"><img src="https://images.unsplash.com/photo-1529109380294-9c1f2f4e6b2b?w=600&auto=format&fit=crop" alt="العالم"><h4>تابع الأخبار المحلية والعالمية من مكان واحد</h4><small>قسم الأخبار · NEO</small></div>
+    <div class="news-card"><img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&auto=format&fit=crop" onerror="this.src='https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&auto=format&fit=crop'" alt="رياضة"><h4>الأخبار الرياضية والتقنية والاقتصادية</h4><small>أقسام NEO</small></div>
+    <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+    <h3 class="section-title">عن NEO</h3>
+    <p style="color:var(--muted);font-size:13px;line-height:1.8">Connect Your World — تواصل، شارك، واكتشف كل جديد.</p>
+    <div class="sub">© 2026 NEO</div>
+  </aside>
+</div>
+
+<div class="modal-back" id="composerModal" onclick="if(event.target===this)closeComposer()">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><b>إنشاء منشور</b><button class="close" onclick="closeComposer()">×</button></div>
+    <textarea id="postText" placeholder="بم تفكر؟"></textarea>
+    <input id="imageUrl" placeholder="رابط صورة (اختياري)">
+    <div class="modal-foot"><span class="sub">النشر هنا تجريبي على هذا الجهاز</span><button class="primary" onclick="publishPost()">نشر</button></div>
+  </div>
+</div>
+
+<div class="modal-back" id="neoAuthModal" style="display:flex;z-index:100;">
+ <div class="modal">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><b>الدخول إلى NEO</b><span class="sub">Connect Your World</span></div>
+  <input id="neoAuthName" placeholder="الاسم الظاهر (للحساب الجديد)" style="display:none">
+  <input id="neoAuthEmail" type="email" placeholder="البريد الإلكتروني" autocomplete="username">
+  <input id="neoAuthPassword" type="password" placeholder="كلمة المرور" autocomplete="current-password">
+  <div id="neoAuthError" class="sub" style="color:#c33;min-height:20px"></div>
+  <div class="modal-foot"><button class="close" id="neoSignupToggle" type="button">إنشاء حساب</button><button class="primary" id="neoLoginBtn" type="button">تسجيل الدخول</button></div>
+  <div class="sub" style="margin-top:10px">استخدم حساب NEO المسجل في Supabase.</div>
+ </div>
+</div>
+<div class="modal-back" id="neoAdminModal" style="z-index:90">
+ <div class="modal admin-modal">
+  <div class="admin-head"><div><b class="admin-title">مركز إدارة NEO</b><div class="sub">إدارة المنصة والمحتوى والمستخدمين والبلاغات</div></div><button class="close" onclick="neoCloseAdmin()">×</button></div>
+  <div class="admin-stats" id="neoAdminStats"><div class="admin-stat"><small>المستخدمون</small><b id="neoStatUsers">—</b></div><div class="admin-stat"><small>المنشورات</small><b id="neoStatPosts">—</b></div><div class="admin-stat"><small>البلاغات المفتوحة</small><b id="neoStatReports">—</b></div><div class="admin-stat"><small>الأخبار المنشورة</small><b id="neoStatNews">—</b></div></div>
+  <div class="admin-tabs">
+   <button class="active" onclick="neoAdminTab('overview',this)">نظرة عامة</button><button onclick="neoAdminTab('reports',this)">البلاغات</button><button onclick="neoAdminTab('users',this)">المستخدمون</button><button onclick="neoAdminTab('posts',this)">المنشورات</button><button onclick="neoAdminTab('news',this)">الأخبار</button>
+  </div>
+  <section class="admin-page" id="neoAdminOverview"><h3>مرحبًا بك في إدارة NEO</h3><p class="sub">اختر القسم من الأعلى لمراجعة البلاغات وإدارة الحسابات والمنشورات والأخبار.</p><div class="admin-shortcuts"><button onclick="neoAdminTabByName('reports')">مراجعة البلاغات</button><button onclick="neoAdminTabByName('users')">إدارة الحسابات</button><button onclick="neoAdminTabByName('posts')">مراجعة المنشورات</button><button onclick="neoAdminTabByName('news')">إدارة الأخبار</button></div></section>
+  <section class="admin-page" id="neoAdminReportsPage" hidden><div class="admin-section-head"><h3>مركز البلاغات</h3><button class="admin-refresh" onclick="loadReports()">تحديث</button></div><div id="neoAdminReports" class="admin-list"><div class="empty">جارٍ تحميل البلاغات...</div></div></section>
+  <section class="admin-page" id="neoAdminUsersPage" hidden><div class="admin-section-head"><h3>إدارة المستخدمين</h3><button class="admin-refresh" onclick="loadAdminUsers()">تحديث</button></div><input id="neoUserSearch" class="admin-search" placeholder="ابحث بالاسم أو اسم المستخدم أو البريد"><div id="neoAdminUsers" class="admin-list"><div class="empty">جارٍ تحميل المستخدمين...</div></div></section>
+  <section class="admin-page" id="neoAdminPostsPage" hidden><div class="admin-section-head"><h3>إدارة المنشورات</h3><button class="admin-refresh" onclick="loadAdminPosts()">تحديث</button></div><div id="neoAdminPosts" class="admin-list"><div class="empty">جارٍ تحميل المنشورات...</div></div></section>
+  <section class="admin-page" id="neoAdminNewsPage" hidden><h3>نشر خبر جديد</h3><input id="neoNewsTitle" placeholder="عنوان الخبر"><input id="neoNewsSummary" placeholder="ملخص الخبر"><textarea id="neoNewsContent" placeholder="نص الخبر ورابط المصدر إن وجد"></textarea><input id="neoNewsSource" placeholder="اسم المصدر"><button class="primary" id="neoPublishNewsBtn">نشر الخبر</button><div class="admin-section-head" style="margin-top:20px"><h3>الأخبار المنشورة</h3><button class="admin-refresh" onclick="loadAdminNews()">تحديث</button></div><div id="neoAdminNews" class="admin-list"></div></section>
+  <div class="admin-foot"><span class="sub">صلاحيات الإدارة مرتبطة بحساب المدير في قاعدة البيانات</span><button class="admin-refresh" onclick="neoCloseAdmin()">إغلاق اللوحة</button></div>
+ </div>
+</div>
+
+<div id="toast" style="position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:11px 18px;border-radius:30px;display:none;z-index:80;font-size:13px"></div>
+<script>
+function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('neo-theme',document.body.classList.contains('dark')?'dark':'light')}
+if(localStorage.getItem('neo-theme')==='dark')document.body.classList.add('dark');
+function notify(message){const t=document.getElementById('toast');t.textContent=message;t.style.display='block';clearTimeout(window.neoToast);window.neoToast=setTimeout(()=>t.style.display='none',2600)}
+function likePost(button){const post=button.closest('.post');const count=post.querySelector('.likes-count');let liked=button.classList.toggle('liked');count.textContent=Number(count.textContent)+(liked?1:-1);button.textContent=liked?'♥ أعجبني':'♡ إعجاب'}
+function sharePost(){if(navigator.share){navigator.share({title:'NEO',text:'شاهد هذا المنشور على NEO'}).catch(()=>{})}else{navigator.clipboard?.writeText(location.href);notify('تم نسخ رابط الصفحة إن كان النسخ متاحاً')}}
+function openComposer(){document.getElementById('composerModal').style.display='flex'}
+function closeComposer(){document.getElementById('composerModal').style.display='none'}
+function publishPost(){const text=document.getElementById('postText').value.trim();const url=document.getElementById('imageUrl').value.trim();if(!text&&!url){notify('اكتب شيئاً أو أضف رابط صورة');return}const post=document.createElement('article');post.className='post panel';post.dataset.own='true';const safeText=text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])).replace(/\n/g,'<br>');const safeUrl=/^https:\/\/.+/i.test(url)?url:'';post.innerHTML=`<div class="post-head"><div class="avatar" style="display:grid;place-items:center;font-weight:bold">AM</div><div class="grow"><div class="name">AM8</div><div class="sub">الآن · منشور تجريبي</div></div></div><div class="post-text">${safeText}</div>${safeUrl?`<img class="post-image" src="${safeUrl}" alt="صورة المنشور">`:''}<div class="post-stats"><span>👍 <span class="likes-count">0</span> إعجاب</span><span>0 تعليق</span></div><div class="post-actions"><button onclick="likePost(this)">♡ إعجاب</button><button onclick="notify('التعليقات ستعمل بعد ربط قاعدة البيانات')">▢ تعليق</button><button onclick="sharePost()">↗ مشاركة</button></div>`;document.getElementById('feed').prepend(post);refreshProfilePosts();document.getElementById('postText').value='';document.getElementById('imageUrl').value='';closeComposer();notify('تمت إضافة المنشور على هذه المعاينة')}
+
+function showProfile(){
+  document.querySelectorAll('.center > section, .center > #feed').forEach(el=>{el.style.display=(el.id==='profileView')?'block':'none'});
+  const right=document.querySelector('.right'); if(right) right.style.display='none';
+  document.querySelectorAll('.navitem').forEach(x=>x.classList.remove('active'));
+  const mine=[...document.querySelectorAll('.navitem')].find(x=>x.textContent.includes('ملفي الشخصي')); if(mine)mine.classList.add('active');
+  document.getElementById('profileView').style.display='block';refreshProfilePosts();window.scrollTo({top:0,behavior:'smooth'});
+}
+function showHome(){
+  document.querySelectorAll('.center > section, .center > #feed').forEach(el=>{el.style.display=(el.id==='profileView')?'none':''});
+  const right=document.querySelector('.right');if(right)right.style.display='block';
+  document.querySelectorAll('.navitem').forEach(x=>x.classList.remove('active'));
+  const home=[...document.querySelectorAll('.navitem')].find(x=>x.textContent.includes('الرئيسية'));
+  if(home)home.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function refreshProfilePosts(){
+  const own=[...document.querySelectorAll('#feed .post[data-own="true"]')];
+  const target=document.getElementById('profilePosts');if(!target)return;
+  document.getElementById('profilePostCount').textContent=own.length;
+  target.innerHTML='';
+  if(!own.length){target.innerHTML='<div class="panel profile-empty">لسه منزلتش أي منشورات. ابدأ وشارك أول منشور ليك على NEO.</div>';return}
+  own.forEach(post=>target.appendChild(post.cloneNode(true)));
+}
+function profileTab(btn,tab){document.querySelectorAll('.profile-tabs button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const target=document.getElementById('profilePosts');if(tab==='posts'){refreshProfilePosts()}else if(tab==='about'){target.innerHTML='<div class="panel profile-empty">مرحباً بك في حساب AM8 على NEO.</div>'}else{const imgs=[...document.querySelectorAll('#feed .post[data-own="true"] img.post-image')];target.innerHTML=imgs.length?imgs.map(i=>`<img src="${i.src}" style="width:48%;margin:1%;border-radius:12px;object-fit:cover">`).join(''):'<div class="panel profile-empty">لا توجد صور حتى الآن.</div>'}}
+function editProfile(){const name=prompt('اكتب الاسم الذي تريد ظهوره:',document.getElementById('profileName').textContent);if(name===null)return;const username=prompt('اكتب اسم المستخدم بدون @:',document.getElementById('profileUsername').textContent.replace('@',''));if(username===null)return;document.getElementById('profileName').textContent=name.trim()||'AM8';document.getElementById('profileUsername').textContent='@'+(username.trim().replace(/\s/g,'')||'ahmed_aboshahla');document.querySelector('.profile-mini .name').textContent=document.getElementById('profileName').textContent;document.querySelector('.profile-mini .sub').textContent=document.getElementById('profileUsername').textContent;notify('تم تحديث الاسم في المعاينة الحالية')}
+
+function setTab(el,name){document.querySelectorAll('.navitem').forEach(x=>x.classList.remove('active'));el.classList.add('active');if(name==='الرئيسية'){showHome();return}if(name==='ملفي الشخصي'){showProfile();return}notify('قسم '+name+' يحتاج ربط البيانات لتفعيل محتواه')}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(()=>{
+'use strict';
+const URL='https://gwodrolhufmtlnvbwufm.supabase.co';
+const KEY='sb_publishable_Z2vI56sJZ3m_H3quA3R3Vw_91yFTwDp';
+if(!window.supabase?.createClient){neoMsg('تعذر تحميل اتصال قاعدة البيانات. تأكد من الإنترنت.');return;}
+const db=window.supabase.createClient(URL,KEY);
+let user=null,profile=null,isAdmin=false,signupMode=false;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function neoMsg(s){if(typeof notify==='function')notify(s);else alert(s)}
+function nameOf(p){return p?.full_name||p?.display_name||p?.name||p?.username||'مستخدم NEO'}
+async function getProfile(id){let r=await db.from('profiles').select('*').eq('id',id).maybeSingle();if(r.data)return r.data;r=await db.from('profiles').select('*').eq('user_id',id).maybeSingle();return r.data||{id,full_name:user?.email?.split('@')[0]||'مستخدم'};}
+function authVisible(v){$('neoAuthModal').style.display=v?'flex':'none';}
+function authError(s){$('neoAuthError').textContent=s||'';}
+async function checkAdmin(){let r=await db.rpc('neo_is_admin');isAdmin=!r.error&&r.data===true; if(isAdmin){let b=document.querySelector('.top-actions button[title="الإشعارات"]');if(b){b.title='لوحة الإدارة';b.textContent='⚙';b.onclick=neoOpenAdmin;}} let logoutBtn=document.querySelector('.top-actions button[title="الرسائل"]');if(logoutBtn)logoutBtn.onclick=async()=>{if(user&&confirm('تسجيل الخروج من NEO؟')){await db.auth.signOut();user=null;authVisible(true);}};}
+async function start(){await loadNewsFromDB();let r=await db.auth.getSession();if(!r.data.session){user=null;authVisible(true);return;}user=r.data.session.user;profile=await getProfile(user.id);await checkAdmin();authVisible(false);syncIdentity();await loadFeedFromDB();await loadNewsFromDB();}
+function syncIdentity(){const n=nameOf(profile),u=profile?.username?'@'+profile.username:'@'+(user?.email?.split('@')[0]||'neo');document.querySelectorAll('.profile-mini .name').forEach(x=>x.innerHTML=esc(n)+(profile?.is_verified?' <span class="verified">● ✓</span>':''));document.querySelectorAll('.profile-mini .sub').forEach(x=>x.textContent=u);const pn=$('profileName'),pu=$('profileUsername'),mv=$('neoMiniVerified'),pv=$('neoProfileVerified');if(pn)pn.textContent=n;if(pu)pu.textContent=u;if(mv)mv.style.display=profile?.is_verified?'inline':'none';if(pv)pv.style.display=profile?.is_verified?'inline':'none';const av=profile?.avatar_url||profile?.photo_url;if(av)document.querySelectorAll('.profile-mini .avatar,.composer-top .avatar,#profileAvatar').forEach(x=>x.src=av);}
+async function signIn(){authError('');let email=$('neoAuthEmail').value.trim(),password=$('neoAuthPassword').value;if(!email||!password){authError('اكتب البريد الإلكتروني وكلمة المرور.');return;}let r;if(signupMode){let full_name=$('neoAuthName').value.trim();if(!full_name){authError('اكتب الاسم الظاهر.');return;}r=await db.auth.signUp({email,password,options:{data:{full_name,display_name:full_name}}});if(r.error){authError(r.error.message);return;}if(!r.data.session){authError('تم إنشاء الحساب. أكّد البريد الإلكتروني ثم سجّل الدخول.');signupMode=false;$('neoSignupToggle').textContent='إنشاء حساب';$('neoLoginBtn').textContent='تسجيل الدخول';return;}}
+else{r=await db.auth.signInWithPassword({email,password});if(r.error){authError(r.error.message);return;}}
+await start();}
+window.neoShowAccount=async()=>{if(!user){authVisible(true);return;}if(isAdmin)neoOpenAdmin();};
+window.editProfile=async()=>{if(!user)return;let n=prompt('الاسم الظاهر:',nameOf(profile));if(n===null)return;let bio=prompt('نبذة عنك:',profile?.bio||'');if(bio===null)return;let key=profile?.id?'id':'user_id';let r=await db.from('profiles').update({full_name:n.trim(),bio}).eq(key,user.id);if(r.error){neoMsg('تعذر حفظ الملف الشخصي: '+r.error.message);return;}profile=await getProfile(user.id);syncIdentity();neoMsg('تم حفظ تعديلات الملف الشخصي.');};
+window.neoOpenAdmin=async()=>{if(!isAdmin){neoMsg('هذه الصفحة مخصصة للإدارة فقط.');return;}$('neoAdminModal').style.display='flex';await loadAdminStats();await loadReports();};
+window.neoCloseAdmin=()=>{$('neoAdminModal').style.display='none';};
+window.neoAdminTab=(tab,btn)=>{document.querySelectorAll('.admin-tabs button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');document.querySelectorAll('.admin-page').forEach(x=>x.hidden=true);const ids={overview:'neoAdminOverview',reports:'neoAdminReportsPage',users:'neoAdminUsersPage',posts:'neoAdminPostsPage',news:'neoAdminNewsPage'};$(ids[tab]).hidden=false;if(tab==='users')loadAdminUsers();if(tab==='posts')loadAdminPosts();if(tab==='news')loadAdminNews();if(tab==='reports')loadReports();};
+window.neoAdminTabByName=tab=>{const b=[...document.querySelectorAll('.admin-tabs button')].find(x=>x.getAttribute('onclick')?.includes("'"+tab+"'"));neoAdminTab(tab,b);};
+async function loadFeedFromDB(){if(!user)return;const box=$('feed');let r=await db.from('posts').select('*').order('created_at',{ascending:false}).limit(40);if(r.error){neoMsg('تعذر تحميل المنشورات: '+r.error.message);return;}if(!r.data?.length){box.innerHTML='<div class="empty panel">لا توجد منشورات بعد. كن أول من ينشر!</div>';return;}let html='';for(const p of r.data){let pr=await getProfile(p.user_id);let av=pr.avatar_url||pr.photo_url||'';let media=p.media_url||'';let mediaHTML='';if(media){let url=media;if(!/^https?:\/\//i.test(media)){let signed=await db.storage.from('posts').createSignedUrl(media,3600);url=signed.data?.signedUrl||'';}if(url)mediaHTML=/\.(mp4|webm|mov)(\?|$)/i.test(url)?`<video class="post-image" controls src="${esc(url)}"></video>`:`<img class="post-image" src="${esc(url)}" alt="">`;}
+let likes=await db.from('neo_likes').select('id',{count:'exact',head:true}).eq('post_id',p.id);let liked=await db.from('neo_likes').select('id').eq('post_id',p.id).eq('user_id',user.id).maybeSingle();
+html+=`<article class="post panel" data-db-post="${esc(p.id)}"><div class="post-head"><img class="avatar" src="${esc(av)}" alt=""><div class="grow"><div class="name">${esc(nameOf(pr))}${pr.is_verified?'<span class="verified"> ● ✓</span>':''}</div><div class="sub">${esc(new Date(p.created_at||Date.now()).toLocaleString('ar-EG'))}</div></div></div><div class="post-text">${esc(p.content||'')}</div>${mediaHTML}<div class="post-stats"><span>👍 ${likes.count||0} إعجاب</span><span>NEO</span></div><div class="post-actions"><button onclick="neoLike('${esc(p.id)}',this)" class="${liked.data?'liked':''}">${liked.data?'♥ أعجبني':'♡ إعجاب'}</button><button onclick="neoComment('${esc(p.id)}')">▢ تعليق</button><button onclick="sharePost()">↗ مشاركة</button></div><div class="sub" id="neo-comments-${esc(p.id)}"></div></article>`;}
+box.innerHTML=html;}
+window.publishPost=async()=>{if(!user){authVisible(true);return;}let content=$('postText').value.trim(),url=$('imageUrl').value.trim();if(!content&&!url){neoMsg('اكتب المنشور أو أضف رابط صورة.');return;}let media_url=null;if(url){if(!/^https:\/\//i.test(url)){neoMsg('رابط الصورة يجب أن يبدأ بـ https://');return;}media_url=url;}let r=await db.from('posts').insert({user_id:user.id,content,media_url});if(r.error){neoMsg('فشل النشر: '+r.error.message);return;}$('postText').value='';$('imageUrl').value='';closeComposer();neoMsg('تم نشر المنشور في NEO');await loadFeedFromDB();};
+window.neoLike=async(id,btn)=>{if(!user)return;let found=await db.from('neo_likes').select('id').eq('post_id',id).eq('user_id',user.id).maybeSingle();let r=found.data?await db.from('neo_likes').delete().eq('id',found.data.id):await db.from('neo_likes').insert({post_id:id,user_id:user.id});if(r.error)neoMsg('تعذر تسجيل الإعجاب: '+r.error.message);else await loadFeedFromDB();};
+window.neoComment=async(id)=>{if(!user)return;let content=prompt('اكتب تعليقك:');if(!content?.trim())return;let r=await db.from('neo_comments').insert({post_id:id,user_id:user.id,content:content.trim()});if(r.error)neoMsg('تعذر إضافة التعليق: '+r.error.message);else neoMsg('تم إضافة التعليق.');};
+async function loadNewsFromDB(){let r=await db.from('neo_news').select('*').eq('is_published',true).order('created_at',{ascending:false}).limit(20);const side=document.querySelector('.right'),feed=$('neoNewsFeed');if(r.error){if(feed)feed.innerHTML='<div class="empty panel">تعذر تحميل أخبار اليوم من قاعدة البيانات: '+esc(r.error.message)+'</div>';return;}const cards=r.data||[];const urlOf=n=>(n.content||'').match(/https?:\/\/[^\s<>"']+/)?.[0]||'';const cleanContent=n=>(n.content||'').replace(/https?:\/\/[^\s<>"']+/g,'').trim();if(feed){feed.innerHTML=cards.map(n=>{const url=urlOf(n),body=cleanContent(n),date=new Date(n.created_at||Date.now()).toLocaleString('ar-EG');return `<article class="post panel"><div class="post-head"><div class="avatar" style="display:grid;place-items:center;font-weight:900">N</div><div class="grow"><div class="name">NEO News <span class="verified">● ✓</span></div><div class="sub">${esc(n.source_name||'مصدر إخباري')} · ${esc(date)}</div></div><span class="official">خبر اليوم</span></div><div class="post-text"><b>${esc(n.title||'خبر')}</b><br>${esc(n.summary||body)}</div>${body&&body!==n.summary?`<div class="post-text">${esc(body)}</div>`:''}${url?`<div class="post-text"><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">اقرأ الخبر من المصدر ↗</a></div>`:''}<div class="post-stats"><span>NEO News</span><span>منشور اليوم</span></div></article>`}).join('')||'<div class="empty panel">لا توجد أخبار منشورة اليوم حتى الآن.</div>';}if(side){const html=cards.slice(0,8).map(n=>{const url=urlOf(n);return `<div class="news-card"><div class="official">▤ ${esc(n.source_name||'NEO News')}</div><h4>${esc(n.title||'خبر')}</h4><small>${esc(n.summary||'')} · ${esc(new Date(n.created_at||Date.now()).toLocaleDateString('ar-EG'))}</small>${url?`<p><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">المصدر</a></p>`:''}</div>`}).join('');const title=side.querySelector('.section-title');if(title){side.querySelectorAll('.news-card').forEach(x=>x.remove());const old=side.querySelector('.neo-news-empty');if(old)old.remove();if(html)title.insertAdjacentHTML('afterend',html);else title.insertAdjacentHTML('afterend','<p class="sub neo-news-empty">لا توجد أخبار منشورة اليوم.</p>');}}}
+async function publishAdminNews(){if(!isAdmin)return;let title=$('neoNewsTitle').value.trim(),summary=$('neoNewsSummary').value.trim(),content=$('neoNewsContent').value.trim(),source_name=$('neoNewsSource').value.trim();if(!title||!content){neoMsg('اكتب عنوان الخبر والمحتوى.');return;}let r=await db.from('neo_news').insert({admin_id:user.id,title,summary,content,source_name,is_published:true});if(r.error){neoMsg('فشل نشر الخبر: '+r.error.message);return;}['neoNewsTitle','neoNewsSummary','neoNewsContent','neoNewsSource'].forEach(id=>$(id).value='');neoMsg('تم نشر الخبر.');await loadNewsFromDB();await loadAdminNews();await loadAdminStats();}
+async function verifyAccount(){if(!isAdmin)return;let id=$('neoVerifyId').value.trim();if(!id)return neoMsg('اكتب UUID المستخدم.');let r=await db.from('profiles').update({is_verified:true}).eq('id',id);if(r.error)r=await db.from('profiles').update({is_verified:true}).eq('user_id',id);neoMsg(r.error?'تعذر التوثيق: '+r.error.message:'تم تحديث حالة التوثيق إن كانت سياسات قاعدة البيانات تسمح.');}
+async function loadAdminStats(){const [u,p,r,n]=await Promise.all([db.from('profiles').select('*',{count:'exact',head:true}),db.from('posts').select('*',{count:'exact',head:true}),db.from('neo_reports').select('*',{count:'exact',head:true}).neq('status','resolved'),db.from('neo_news').select('*',{count:'exact',head:true}).eq('is_published',true)]);$('neoStatUsers').textContent=u.count??'—';$('neoStatPosts').textContent=p.count??'—';$('neoStatReports').textContent=r.count??'—';$('neoStatNews').textContent=n.count??'—';}
+async function loadReports(){let r=await db.from('neo_reports').select('*').order('created_at',{ascending:false}).limit(100);const box=$('neoAdminReports');if(r.error){box.innerHTML='<div class="empty">تعذر تحميل البلاغات: '+esc(r.error.message)+'</div>';return;}box.innerHTML=(r.data||[]).map(x=>{const status=x.status||'open';return `<div class="admin-row"><div class="admin-row-main"><div class="admin-row-title">${esc(x.reason||'بلاغ جديد')}</div><div class="admin-row-meta">${esc(x.details||'لا توجد تفاصيل')}<br>المبلّغ: ${esc(x.reporter_id||x.user_id||'غير محدد')} · المنشور: ${esc(x.post_id||'—')} · الحالة: ${esc(status)}<br>${esc(x.created_at?new Date(x.created_at).toLocaleString('ar-EG'):'')}</div></div><div class="admin-row-actions"><button class="admin-action good" onclick="neoSetReportStatus('${esc(x.id)}','resolved')">تم الحل</button><button class="admin-action" onclick="neoSetReportStatus('${esc(x.id)}','reviewing')">قيد المراجعة</button><button class="admin-action danger" onclick="neoSetReportStatus('${esc(x.id)}','rejected')">رفض البلاغ</button></div></div>`}).join('')||'<div class="empty">لا توجد بلاغات حتى الآن.</div>';}
+window.neoSetReportStatus=async(id,status)=>{if(!isAdmin)return;let r=await db.from('neo_reports').update({status}).eq('id',id);if(r.error){neoMsg('تعذر تحديث البلاغ: '+r.error.message);return;}neoMsg('تم تحديث حالة البلاغ.');await loadReports();await loadAdminStats();};
+async function loadAdminUsers(){const box=$('neoAdminUsers');let r=await db.from('profiles').select('*').order('created_at',{ascending:false}).limit(200);if(r.error){box.innerHTML='<div class="empty">تعذر تحميل المستخدمين: '+esc(r.error.message)+'</div>';return;}const draw=()=>{const q=($('neoUserSearch').value||'').toLowerCase();const rows=(r.data||[]).filter(x=>[x.full_name,x.display_name,x.name,x.username,x.email,x.id,x.user_id].some(v=>String(v||'').toLowerCase().includes(q)));box.innerHTML=rows.map(x=>{const id=x.id||x.user_id;return `<div class="admin-row"><div class="admin-row-main"><div class="admin-row-title">${esc(nameOf(x))} ${x.is_verified?' <span class="verified">● ✓</span>':''}</div><div class="admin-row-meta">@${esc(x.username||'—')} · ${esc(x.email||'البريد غير متاح')}<br>الحالة: ${x.is_banned?'محظور':'نشط'} · المعرف: ${esc(id||'—')}</div></div><div class="admin-row-actions"><button class="admin-action ${x.is_verified?'':'good'}" onclick="neoToggleVerify('${esc(id)}',${!!x.is_verified})">${x.is_verified?'إلغاء التوثيق':'توثيق'}</button><button class="admin-action ${x.is_banned?'good':'danger'}" onclick="neoToggleBan('${esc(id)}',${!!x.is_banned})">${x.is_banned?'إلغاء الحظر':'حظر الحساب'}</button></div></div>`}).join('')||'<div class="empty">لا توجد نتائج مطابقة.</div>';};$('neoUserSearch').oninput=draw;draw();}
+window.neoToggleVerify=async(id,current)=>{if(!isAdmin)return;let key='id';let r=await db.from('profiles').update({is_verified:!current}).eq(key,id);if(r.error)r=await db.from('profiles').update({is_verified:!current}).eq('user_id',id);if(r.error){neoMsg('تعذر تغيير التوثيق: '+r.error.message);return;}neoMsg(current?'تم إلغاء التوثيق.':'تم توثيق الحساب.');await loadAdminUsers();};
+window.neoToggleBan=async(id,current)=>{if(!isAdmin)return;if(!confirm(current?'إلغاء حظر هذا الحساب؟':'حظر هذا الحساب؟'))return;let payload=current?{is_banned:false,banned_at:null,ban_reason:null}:{is_banned:true,banned_at:new Date().toISOString(),ban_reason:'قرار إدارة NEO'};let r=await db.from('profiles').update(payload).eq('id',id);if(r.error)r=await db.from('profiles').update(payload).eq('user_id',id);if(r.error){neoMsg('تعذر الحظر. تأكد من تشغيل ترقية SQL الخاصة بلوحة الإدارة: '+r.error.message);return;}neoMsg(current?'تم إلغاء الحظر.':'تم حظر الحساب.');await loadAdminUsers();};
+async function loadAdminPosts(){const box=$('neoAdminPosts');let r=await db.from('posts').select('*').order('created_at',{ascending:false}).limit(100);if(r.error){box.innerHTML='<div class="empty">تعذر تحميل المنشورات: '+esc(r.error.message)+'</div>';return;}box.innerHTML=(r.data||[]).map(x=>`<div class="admin-row"><div class="admin-row-main"><div class="admin-row-title">${esc((x.content||'منشور بدون نص').slice(0,180))}</div><div class="admin-row-meta">الناشر: ${esc(x.user_id||'—')} · ${esc(x.created_at?new Date(x.created_at).toLocaleString('ar-EG'):'')}</div></div><div class="admin-row-actions"><button class="admin-action danger" onclick="neoDeletePost('${esc(x.id)}')">حذف المنشور</button></div></div>`).join('')||'<div class="empty">لا توجد منشورات.</div>';}
+window.neoDeletePost=async(id)=>{if(!isAdmin||!confirm('تأكيد حذف المنشور نهائيًا؟'))return;let r=await db.from('posts').delete().eq('id',id);if(r.error){neoMsg('تعذر حذف المنشور: '+r.error.message);return;}neoMsg('تم حذف المنشور.');await loadAdminPosts();await loadAdminStats();};
+async function loadAdminNews(){const box=$('neoAdminNews');let r=await db.from('neo_news').select('*').order('created_at',{ascending:false}).limit(100);if(r.error){box.innerHTML='<div class="empty">تعذر تحميل الأخبار: '+esc(r.error.message)+'</div>';return;}box.innerHTML=(r.data||[]).map(x=>`<div class="admin-row"><div class="admin-row-main"><div class="admin-row-title">${esc(x.title||'خبر بدون عنوان')}</div><div class="admin-row-meta">${esc(x.source_name||'NEO')} · ${x.is_published?'منشور':'مسودة'}</div></div><div class="admin-row-actions"><button class="admin-action danger" onclick="neoDeleteNews('${esc(x.id)}')">حذف الخبر</button></div></div>`).join('')||'<div class="empty">لا توجد أخبار.</div>';}
+window.neoDeleteNews=async(id)=>{if(!isAdmin||!confirm('تأكيد حذف الخبر؟'))return;let r=await db.from('neo_news').delete().eq('id',id);if(r.error){neoMsg('تعذر حذف الخبر: '+r.error.message);return;}neoMsg('تم حذف الخبر.');await loadAdminNews();await loadAdminStats();};
+$('neoLoginBtn').onclick=signIn;$('neoSignupToggle').onclick=()=>{signupMode=!signupMode;$('neoAuthName').style.display=signupMode?'block':'none';$('neoSignupToggle').textContent=signupMode?'لدي حساب بالفعل':'إنشاء حساب';$('neoLoginBtn').textContent=signupMode?'إنشاء الحساب':'تسجيل الدخول';authError('');};$('neoAuthPassword').addEventListener('keydown',e=>{if(e.key==='Enter')signIn();});$('neoPublishNewsBtn').onclick=publishAdminNews;$('neoVerifyBtn').onclick=verifyAccount;
+db.auth.onAuthStateChange((_event,session)=>{if(!session){user=null;profile=null;isAdmin=false;authVisible(true);}else if(!user){user=session.user;start();}});
+start();
+// Refresh the news shown by NEO while the page is open. Server-side daily ingestion is configured separately.
+setInterval(()=>{if(document.visibilityState==='visible')loadNewsFromDB();},30*60*1000);
+})();
+</script>
+
+</body>
+</html>
